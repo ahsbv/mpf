@@ -234,6 +234,7 @@
     background: linear-gradient(to bottom, #3a3c3f, #889fad);
     height: 500px;
     width: auto;
+    margin-top:10px;
     border-radius: 0% ;
 }
 .ab2 h1,h2 {
