@@ -213,33 +213,36 @@
     });
 
     const slides = document.querySelectorAll('.slide');
-let currentSlide = 0;
-let isScrolling = false; 
-slides[currentSlide].classList.add('active');
-
-// Detect the scroll event
-window.addEventListener('wheel', function (e) {
-    if (isScrolling) return; // Prevent triggering until the delay is over
-
-    if (e.deltaY > 0) { 
-        if (currentSlide < slides.length - 1) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide++;
-            slides[currentSlide].classList.add('active');
-        }
-    } else { // Scroll Up
-        if (currentSlide > 0) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide--;
-            slides[currentSlide].classList.add('active');
-        }
+    const carouselContainer = document.querySelector('.inno');
+    let currentSlide = 0;
+    let autoSlide;
+    
+    // Function to change slides
+    function changeSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
     }
-    isScrolling = true;
-    setTimeout(() => {
-        isScrolling = false;
-    }, 2000); 
-});
-
+    
+    // Start automatic sliding
+    function startAutoSlide() {
+        autoSlide = setInterval(changeSlide, 4000); // Change slide every 4 seconds
+    }
+    
+    // Stop sliding when the mouse is over the container
+    function stopAutoSlide() {
+        clearInterval(autoSlide);
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        slides[currentSlide].classList.add('active'); // Activate the first slide
+        startAutoSlide();
+        // Pause sliding when mouse enters the container
+        carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+        // Resume sliding when mouse leaves the container
+        carouselContainer.addEventListener('mouseleave', startAutoSlide);
+    });
 </script>
 
 </html>
